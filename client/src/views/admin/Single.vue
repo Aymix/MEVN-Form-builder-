@@ -20,9 +20,7 @@
         <div class="mt-4 bg-color-dark text-white p-10-px p-4 border-0 border-r-7-px w-100">
             <h5 class="m-0">{{form.name}}</h5>
         </div>
-        <blitz-form v-model="formData.form" class="form-build w-100" :schema="schema" :columnCount="1" />
-        <a v-on:click="addSubmission(formData)" href="#" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn btn-primary">Add new submission</a>
-        {{submissions.submissions}}
+       
         <div class="my-4  ">
             <table class=" table border-r-7-px border-2-px font-medium f-w-500 m-0">
                 <thead>
@@ -127,6 +125,7 @@ export default {
                 const response = await submissionService.addSubmission(data);
                 console.log(response);
 
+                this.submissions.submissions = [];
                 this.submissions.submissions.unshift(response.data);
 
             } catch (error) {

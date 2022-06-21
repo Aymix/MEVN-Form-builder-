@@ -18,6 +18,18 @@ import PagesUser from "./views/user/Pages.vue";
 import SinglePage from "./views/user/SinglePage.vue";
 import MainUser from "./views/user/Main.vue";
 
+import authHeader from '@/services/auth.service.header';
+
+
+const authGuard = (to,from,next) => {
+  const loggedIn = localStorage.getItem('user');
+
+  if (!loggedIn) {
+      return next('/login');
+    }
+
+    next();
+}
 
 
 const routes = [{
@@ -44,6 +56,8 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
+        beforeEnter: authGuard,
+
        
         children: [{
                 name: "Dashboard",
@@ -112,19 +126,5 @@ const router = createRouter({
     routes,
 });
 
-
-router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/', '/pages', '/pages/f', , '/pages/r']
-  const authRequired = !publicPages.includes(to.path)
-  const loggedIn = localStorage.getItem('user')
-
-  // trying to access a restricted page + not logged in
-  // redirect to login page
-  if (authRequired && !loggedIn) {
-    next('/login')
-  } else {
-    next()
-  }
-})
 
 export default router;
