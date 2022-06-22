@@ -12,7 +12,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 import { defineComponent, reactive } from "vue";
 import TableLite from "@/components/TableLite.vue";
 // Fake Data for 'asc' sortable
@@ -112,12 +112,6 @@ export default defineComponent({
           table.sortable.sort = sort;
         });
         // End use axios to get data from Server
-
-
-
-
-
-
       
       setTimeout(() => {
         table.isReSearch = offset == undefined ? true : false;
