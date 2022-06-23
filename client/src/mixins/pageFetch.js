@@ -18,11 +18,11 @@ export default {
 
             try {
 
-                const response = await PageService.getPage(this.$route.query.id);
+                const response = await PageService.getPage(this.$route.params.id);
                 this.page = response;
                 this.form = response.input;
                 this.schema = response.input.cshema;
-                console.log();
+                console.log(response);
                 
               
 

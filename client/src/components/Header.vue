@@ -10,6 +10,7 @@
                     <li class="nav-item">
                         <router-link class=" f-w-500 nav-link" to="/pages">Pages</router-link>
                     </li>
+                     
                 </ul>
             </div>
             <div v-if="$store.state.auth.status.loggedIn" class="d-flex">
@@ -19,6 +20,9 @@
                     </li>
                     <li class="nav-item">
                         <router-link class="f-w-500 nav-link" to="/dashboard/Forms">Forms</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class=" f-w-500 nav-link" to="/dashboard/submissions">Submissions</router-link>
                     </li>
                     <li class="nav-item d-flex align-items-center">
                         <div v-if="loggedIn">

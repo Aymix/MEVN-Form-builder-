@@ -13,19 +13,22 @@ import PagesAdmin from "./views/admin/Pages.vue";
 import SingleAdminPage from "./views/admin/Single.vue";
 import EditAdminPage from "./views/admin/Page.vue";
 import FormsAdmin from "./views/admin/Forms.vue";
+import submissionsAdmin from "./views/admin/submissions.vue"
 // User templates
 import PagesUser from "./views/user/Pages.vue";
 import SinglePage from "./views/user/SinglePage.vue";
 import MainUser from "./views/user/Main.vue";
 
+//
+
 import authHeader from '@/services/auth.service.header';
 
 
-const authGuard = (to,from,next) => {
-  const loggedIn = localStorage.getItem('user');
+const authGuard = (to, from, next) => {
+    const loggedIn = localStorage.getItem('user');
 
-  if (!loggedIn) {
-      return next('/login');
+    if (!loggedIn) {
+        return next('/login');
     }
 
     next();
@@ -58,7 +61,7 @@ const routes = [{
         },
         beforeEnter: authGuard,
 
-       
+
         children: [{
                 name: "Dashboard",
                 path: "",
@@ -98,6 +101,12 @@ const routes = [{
                 component: FormsAdmin,
 
             },
+            {
+                name: "submissionsAdmin",
+                path: "submissions",
+                component: submissionsAdmin,
+
+            },
         ]
     },
     {
@@ -112,9 +121,10 @@ const routes = [{
             },
             {
                 name: "SinglePage",
-                path: ":url",
+                path: ":url/:id",
                 component: SinglePage,
                 props: true,
+                
             }
         ],
     }

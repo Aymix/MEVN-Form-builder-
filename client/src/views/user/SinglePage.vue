@@ -8,7 +8,7 @@
                 <p class="mt-3  font-medium description mb-0">{{page.description}}</p>
             </div>
             <div>
-                <p class="mt-5 font-medium url-text">{{page.url}}<svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <p class="mt-5 font-medium url-text"><svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <polygon points="0 0 24 0 24 24 0 24"></polygon>
                             <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="mt-4 bg-color-dark text-white p-10-px p-4 border-0 border-r-7-px w-100">
-            <h5 class="m-0">{{form.name}}</h5>
+            <h5 class="m-0">{{this.form.name}}</h5>
         </div>
         <blitz-form v-model="formData.form" class="form-build w-100" :schema="schema" :columnCount="1" />
         <a v-on:click="addSubmission(formData)" href="#" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn btn-primary">Add new submission</a>
@@ -43,6 +43,10 @@ import { ref } from 'vue'
 import submissionService from '@/services/submission.service'
 import pageMixin from '@/mixins/pageFetch';
 export default {
+    props: {
+        //Decouple the parameter ID passed in the route to the props attribute of the component
+        id: String
+    },
     components: {
         DTable,
     },
@@ -64,6 +68,7 @@ export default {
             submissions: []
         }
     },
+    
     mounted() {
         this.loadSubmission();
     },
@@ -73,9 +78,9 @@ export default {
         loadSubmission: async function() {
             try {
 
-                const response = await submissionService.getSubmissions();
-                this.submissions = response.data;
-                console.log(this.submissions.submissions);
+                const response = await submissionService.getSubmissions(this.id);
+                this.submissions = response.data.submissions;
+                console.log(this.submissions);
 
 
             } catch (error) {

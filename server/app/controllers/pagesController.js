@@ -23,16 +23,14 @@ exports.pageSave = (req, res) => {
         .then(function(page) {
            
 
-           return Page.findOneAndUpdate({ _id: page._id }, { $push: { input: req.params.id } }, { new: true, useFindAndModify: false })
+           return Page.findOneAndUpdate({ _id: page._id }, { $set: { input: req.params.id } }, { new: true, useFindAndModify: false })
            })
 
            .then(function(pg) {  
             res.status(200).send({page:pg, message:'Page created successfuly'});
 
             return Input.findOneAndUpdate({ _id: req.params.id }, { $push: { pages: pg._id } }, { new: true, useFindAndModify: false });
-            
-            
-        
+
         
         })
         

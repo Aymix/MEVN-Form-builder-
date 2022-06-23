@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 
 const Submission = mongoose.model(
     'Submission',
@@ -7,6 +8,11 @@ const Submission = mongoose.model(
         form: {
             type: Object,
             required: true
+        },
+        CreatedAt: { type: Date, default: Date.now },
+        page: {
+            type: Schema.Types.ObjectId,
+            ref: 'Page'
         },
 
 

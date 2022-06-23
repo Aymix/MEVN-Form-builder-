@@ -13,4 +13,6 @@ router.delete('/:id', controller.pageDelete)
 router.patch('/:id', controller.pageUpdate)
 
 
+
+
 module.exports = router

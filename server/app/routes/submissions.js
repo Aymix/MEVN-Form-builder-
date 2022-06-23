@@ -4,12 +4,13 @@ const controller = require('../controllers/submissionsController')
 
 router.get('/', controller.submissions)
 
-router.post('/', controller.submissionSave)
+router.post('/:id', controller.submissionSave)
 
 router.get('/:id', controller.submissionGet)
 
 router.delete('/:id', controller.submissionDelete)
 
+router.get('/filter', controller.submissionsFilter)
 
 
 module.exports = router

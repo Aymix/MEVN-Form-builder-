@@ -9,7 +9,7 @@
                 {{page.description}}
             </p>
             <small><u>
-                <router-link class="btn btn-primary mx-1 bg-green-light text-green-dark border-none p-action f-w-500 font-small border-r-7-px" :to="{name: 'SinglePage',query: {id: page._id}, params: { url:page.url }}">
+                <router-link class="btn btn-primary mx-1 bg-green-light text-green-dark border-none p-action f-w-500 font-small border-r-7-px" :to="{name: 'SinglePage', params: { url:page.url, id:page._id }}">
                             Show
                         </router-link>
 
