@@ -26,9 +26,9 @@ class SubmissionsService {
             })
     }
 
-    addSubmission(submission) {
+    addSubmission(submission, id) {
         return axios
-            .post(API_URL, {
+            .post(API_URL + id, {
                 form: submission.form
                 
             })

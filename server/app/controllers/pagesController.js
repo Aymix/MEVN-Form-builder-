@@ -36,7 +36,7 @@ exports.pageSave = (req, res) => {
         
         .catch(function(err) {
             if (err.code == 11000) {
-                return res.status(401).json({ message: 'duplicated urls not allowed' })
+                return res.status(401).json({ message: 'duplicated page name/url not allowed !' })
             }
             else if(!req.params.id){
                 return res.status(401).json({ message: 'associate a form' })

@@ -21,7 +21,7 @@
             <h5 class="m-0">{{this.form.name}}</h5>
         </div>
         <blitz-form v-model="formData.form" class="form-build w-100" :schema="schema" :columnCount="1" />
-        <a v-on:click="addSubmission(formData)" href="#" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn btn-primary">Add new submission</a>
+        <a v-on:click="addSubmission(formData, id)" href="#" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn btn-primary">Add new submission</a>
         <div v-if="message && clicked" id="message-alert" class="alert mt-2" :class="successful ? 'alert-success' : 'alert-danger'">
             {{ message }}
         </div>
@@ -78,7 +78,7 @@ export default {
         loadSubmission: async function() {
             try {
 
-                const response = await submissionService.getSubmissions(this.id);
+                const response = await submissionService.getSubmissions(this.$route.params.id);
                 this.submissions = response.data.submissions;
                 console.log(this.submissions);
 
@@ -95,13 +95,13 @@ export default {
             try {
                 console.log(data.form);
 
-                const response = await submissionService.addSubmission(data);
+                const response = await submissionService.addSubmission(data, this.$route.params.id);
                 console.log(response);
                 this.message = 'form submited successfuly'
                 this.successful = true
                 this.clicked = true
 
-                this.submissions.submissions.unshift(response.data);
+                this.submissions.unshift(response.data);
 
             } catch (error) {
                  this.message = 'an error has occured, try again !'

@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-xs flex-auto p-3 px-0">
+        <div class="container-xs flex-auto p-3 px-4">
           <router-link class="navbar-brand f-w-500" to="/">Form Builder*</router-link>
             <div v-if="!$store.state.auth.status.loggedIn" class="d-flex">
                 <ul class="navbar-nav me-auto mb-2  mb-lg-0">
