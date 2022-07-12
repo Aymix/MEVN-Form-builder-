@@ -26,13 +26,7 @@ export default defineComponent({
       const table = reactive({
         isLoading: false,
         columns: [
-          {
-            label: "ID",
-            field: "_id",
-            width: "3%",
-            sortable: true,
-            isKey: true,
-          },
+          
           {
             label: "Created At",
             field: "CreatedAt",

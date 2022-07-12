@@ -35,7 +35,7 @@
                 </tbody>
             </table>
            
-            <DTable/>
+            <DTable class="mt-4" />
         </div>
     </div>
 </template>

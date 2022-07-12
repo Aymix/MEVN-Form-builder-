@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-lg-2 col-xs-1 col-md-3 col-sm-3 mx-2 position-relative button-comlex mx-1 mt-4 text-center" v-for="(input, index) in types">
-            <a href="#" class="d-block my-2 w-100 builder-btn" @click="textInput(input.name), remountCounter++">{{input.name}}
+            <a href="#" class="d-block my-2 w-100 builder-btn" @click="showModal(input.name)">{{input.name}}
                 <svg class="plus-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
@@ -19,6 +19,31 @@
         </form>
     </div>
     <div class="admin-form-card mx-3 mt-4">
+        <b-modal ref="myModal" title="Add new field" v-model="modalShow" hide-footer>
+            <form @submit.prevent="addinput(inputConfig)">
+                <p>Field type:<span class="btn btn-primary mx-1 bg-blue-light text-blue-dark border-none p-action f-w-500 font-small border-r-7-px">{{type}}</span></p>
+                <input placeholder="Title" type="text" class="form-control mt-2 p-10-px border-r-7-px  font-medium f-w-500" v-model="inputConfig.id" name="title" id="title" />
+
+                <div class="input-errors" v-for="(error, index) of v$.inputConfig.id.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+
+                <input placeholder="label" type="text" class="form-control mt-2 p-10-px border-r-7-px  font-medium f-w-500" v-model="inputConfig.label" name="label" id="label" />
+
+                <div class="input-errors" v-for="(error, index) of v$.inputConfig.label.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+
+                <input placeholder="suffix" type="text" class="form-control mt-2 p-10-px border-r-7-px  font-medium f-w-500" v-model="inputConfig.suffix" name="suffix" id="suffix" />
+
+                <div class="input-errors" v-for="(error, index) of v$.inputConfig.suffix.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+
+                <button type="submit" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn mt-4 btn-primary">Add Input</button>
+                <div v-if="added" id="message-alert" class="alert mt-2 mb-0 alert-success">Field added successfuly</div>
+            </form>
+        </b-modal>
         <draggable class="" v-model="form.cshema" item-key="id">
             <template #item="{element}">
                 <div class="d-flex form-mini-card my-2">
@@ -38,12 +63,13 @@
                         <p class="m-0 text-center">{{element.id}}</p>
                     </div>
                     <div class="p-2 drag">
-                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="none" d="M0 0h24v24H0V0z" />
+                            <path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
                     </div>
                 </div>
             </template>
         </draggable>
-     
         <button v-on:click="addForm(form)" type="submit" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn mt-4 btn-primary">Add new form</button>
     </div>
     <div class="mx-3 mt-4  ">
@@ -71,33 +97,42 @@
 </template>
 <script>
 import InputService from '@/services/input.service'
-
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import BuilderMixin from '@/mixins/inputBuilder';
 import FormsMixin from '@/mixins/formsFetch';
 import draggable from 'vuedraggable'
 
 export default {
+
+
     components: {
         draggable,
     },
+
 
     mixins: [BuilderMixin, FormsMixin],
 
     data() {
         return {
-
+            v$: useVuelidate(),
+            added: false,
+            modalShow: false,
+            type: '',
+            inputConfig: {
+               
+                "component": "input",
+                
+            },
         }
     },
+
 
     methods: {
 
         addForm: async function(form) {
 
-
-
             try {
-
-
 
                 const response = await InputService.addInput(form);
                 this.form = { name: '', cshema: [] };
@@ -108,6 +143,39 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        addinput: function(inputConfig) {
+
+            this.v$.$validate()
+            if (!this.v$.$error) {
+                this.form.cshema.push(inputConfig);
+
+                this.inputConfig = {
+                    'id': '',
+                    "component": "input",
+                    "label": '',
+                    "suffix": '',
+                    "type": ''
+                }
+                this.added = true
+                setTimeout(() => {
+                    this.added = false
+                }, 2000);
+            } else {
+                console.log(this.v$.inputConfig.id.$errors);
+            }
+
+
+
+        },
+        showModal: function(type) {
+            this.type = type;
+            this.inputConfig = {
+                "type": type.toLowerCase()
+
+            }
+            this.modalShow = true
+
         },
         remove: function(index) {
             this.form.cshema.splice(index, 1);
@@ -126,7 +194,22 @@ export default {
             }
         }
 
-    }
+    },
+    validations() {
+        return {
+            inputConfig: {
+                id: {
+                    required
+                },
+                label: {
+                    required
+                },
+                suffix: {
+                    required
+                }
+            },
+        }
+    },
 }
 
 </script>
