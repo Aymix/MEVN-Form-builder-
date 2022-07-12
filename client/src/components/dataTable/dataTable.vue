@@ -15,7 +15,7 @@
 import axios from 'axios'
 import { defineComponent, reactive } from "vue";
 import TableLite from "@/components/TableLite.vue";
-// Fake Data for 'asc' sortable
+import moment from 'moment'
 
 export default defineComponent({
 
@@ -34,11 +34,128 @@ export default defineComponent({
             isKey: true,
           },
           {
-            label: "date",
-            field: "form.",
+            label: "Created At",
+            field: "CreatedAt",
             width: "3%",
             sortable: true,
             isKey: true,
+             display: function (row) {
+            return (
+              moment(row.CreatedAt).format('YYYY/MM/DD HH:MM:ss')
+            );
+          },
+          },
+          {
+            label: "Date",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+              if (!row.form.date =="") {
+            return ( 
+            moment(row.form.date).format('YYYY/MM/DD')              
+            );
+            }
+          }
+          },
+          {
+            label: "Text",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+              
+            return ( 
+            
+            row.form.text
+
+            );
+           
+          },
+          },
+          {
+            label: "Number",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+              
+            return ( 
+            row.form.number
+
+            );
+            },
+          
+          },
+          {
+            label: "Checkboxes",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+              
+            return ( 
+            row.form.checkboxes
+
+            );
+            }
+          
+          },
+          {
+            label: "Radio",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+              
+            return ( 
+            row.form.radio
+
+            );
+           
+          },
+          },
+          {
+            label: "Time",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+            
+            return ( 
+            row.form.time
+
+            );
+            
+          },
+          },
+          {
+            label: "Phone",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+            
+            return ( 
+            row.form.phone
+
+            );
+          
+          },
+          },
+          {
+            label: "Url",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+            display: function (row) {
+             
+            return ( 
+            row.form.url
+
+            );
+          
+          },
           },
          
         ],

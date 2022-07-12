@@ -34,7 +34,7 @@
                     </tr>
                 </tbody>
             </table>
-            <EasyDataTable :headers="headers" :items="items" />
+           
             <DTable/>
         </div>
     </div>
@@ -49,7 +49,6 @@ const formData = ref({})
 <script lang="ts">
 import DTable from '@/components/dataTable/dataTable.vue'
 import { BlitzForm, BlitzInput } from 'blitzar'
-
 import 'blitzar/dist/style.css'
 import { ref } from 'vue'
 import submissionService from '@/services/submission.service'

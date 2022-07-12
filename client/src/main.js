@@ -4,6 +4,7 @@ import router from './router'
 import store from '@/store'
 import VueTableLite from 'vue3-table-lite'
 import './style.css';
+import moment from 'moment'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 import 'vue3-easy-data-table/dist/style.css';

@@ -26,7 +26,17 @@ a {
     font-weight: 600 !important;
     border: 0px solid !important;
 }
-
+.sortable-chosen .drag{
+    background: #cdcccc;
+    border-radius: 7px;
+    opacity: .7;
+}
+.sortable-chosen.form-mini-card{
+    background: #ededed!important;
+}
+.sortable-chosen .rmv{
+    background: #ffc0c0;
+}
 .flex-auto {
     flex: auto;
     display: flex;
@@ -41,6 +51,7 @@ a {
 }
 
 .form-mini-card {
+    cursor: pointer;
     background: #e3e3e3;
     display: flex;
     border-radius: 7px;
@@ -86,7 +97,6 @@ a {
     margin-bottom: 10px;
     height: 40px;
     border-radius: 7px;
-    background: #fabcbc;
     opacity: .7;
     width: 40px;
     margin: auto;
@@ -202,7 +212,7 @@ a {
 
 .plus-icon {
     position: absolute;
-    right: -7px;
+    right: 17px;
     top: 12px;
     width: 20px;
     height: 20px;

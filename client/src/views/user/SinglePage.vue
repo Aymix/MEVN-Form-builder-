@@ -70,25 +70,12 @@ export default {
     },
     
     mounted() {
-        this.loadSubmission();
+       
     },
 
     methods: {
 
-        loadSubmission: async function() {
-            try {
-
-                const response = await submissionService.getSubmissions(this.$route.params.id);
-                this.submissions = response.data.submissions;
-                console.log(this.submissions);
-
-
-            } catch (error) {
-
-                console.log(error);
-
-            }
-        },
+        
 
         addSubmission: async function(data) {
 
@@ -101,7 +88,7 @@ export default {
                 this.successful = true
                 this.clicked = true
 
-                this.submissions.unshift(response.data);
+                
 
             } catch (error) {
                  this.message = 'an error has occured, try again !'
@@ -112,17 +99,7 @@ export default {
             }
         },
 
-        deleteSubmission: async function(sub, index) {
-            try {
-                const response = await submissionService.deleteSubmission(sub);
-
-                this.submissions.submissions.splice(index, 1);
-
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
+       
 
     }
 

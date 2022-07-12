@@ -1,15 +1,15 @@
 <template>
     <div class="row">
-    <div class="col-lg-2 col-xs-1 col-md-3 col-sm-3 mx-2 position-relative button-comlex mx-1 mt-4 text-center" v-for="(input, index) in types">
-        <a href="#" class="d-block my-2 w-100 builder-btn" @click="textInput(input.name), remountCounter++">{{input.name}}
-        <svg class="plus-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
-                <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1" />
-            </g>
-        </svg>
-        </a>
-    </div>
+        <div class="col-lg-2 col-xs-1 col-md-3 col-sm-3 mx-2 position-relative button-comlex mx-1 mt-4 text-center" v-for="(input, index) in types">
+            <a href="#" class="d-block my-2 w-100 builder-btn" @click="textInput(input.name), remountCounter++">{{input.name}}
+                <svg class="plus-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                        <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1" />
+                    </g>
+                </svg>
+            </a>
+        </div>
     </div>
     <div class="admin-form-card mx-3 mt-4">
         <form>
@@ -19,23 +19,31 @@
         </form>
     </div>
     <div class="admin-form-card mx-3 mt-4">
-        <div class="d-flex form-mini-card my-2" v-for="( singleSchema, index) in  form.cshema" :key="singleSchema.id">
-            <div class="">
-                <a class="rmv  align-items-center d-flex" style="height:40px" v-on:click="remove(index)" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
-                                <rect x="0" y="7" width="16" height="2" rx="1" />
-                                <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
-                            </g>
-                        </g>
-                    </svg>
-                </a>
-            </div>
-            <div class="w-100">
-                <p class="m-0 text-center">{{singleSchema.id}}</p>
-            </div>
-        </div>
+        <draggable class="" v-model="form.cshema" item-key="id">
+            <template #item="{element}">
+                <div class="d-flex form-mini-card my-2">
+                    <div class="">
+                        <a class="rmv  align-items-center d-flex" style="height:40px" v-on:click="remove(index)" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                        <rect x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="w-100">
+                        <p class="m-0 text-center">{{element.id}}</p>
+                    </div>
+                    <div class="p-2 drag">
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </div>
+                </div>
+            </template>
+        </draggable>
+     
         <button v-on:click="addForm(form)" type="submit" class="p-10-px bg-color-dark border-0 border-r-7-px w-100 font-medium f-w-500 btn mt-4 btn-primary">Add new form</button>
     </div>
     <div class="mx-3 mt-4  ">
@@ -66,8 +74,12 @@ import InputService from '@/services/input.service'
 
 import BuilderMixin from '@/mixins/inputBuilder';
 import FormsMixin from '@/mixins/formsFetch';
+import draggable from 'vuedraggable'
 
 export default {
+    components: {
+        draggable,
+    },
 
     mixins: [BuilderMixin, FormsMixin],
 
