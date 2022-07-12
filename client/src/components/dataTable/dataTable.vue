@@ -26,7 +26,13 @@ export default defineComponent({
       const table = reactive({
         isLoading: false,
         columns: [
-          
+          {
+            label: "ID",
+            field: "_id",
+            width: "3%",
+            sortable: true,
+            isKey: true,
+          },
           {
             label: "Created At",
             field: "CreatedAt",
@@ -154,9 +160,9 @@ export default defineComponent({
          
         ],
         rows: [],
-        totalRecordCount: 0,
+        totalRecordCount: 10,
         sortable: {
-          order: "_id",
+          order: "CreatedAt",
           sort: "asc",
         },
       });
@@ -168,7 +174,7 @@ export default defineComponent({
         table.isLoading = true;
   
         // Start use axios to get data from Server
-        let url = 'http://localhost:8080/submissions?limit=' + limit;
+        let url = 'http://localhost:8080/submissions?limit=' + limit + "&populate=page" + "&sort="+ sort;
         axios.get(url)
         .then((response) => {
           // Point: your response is like it on this example.
@@ -185,11 +191,12 @@ export default defineComponent({
           //   count: 2,
           //   ...something
           // }
+          console.log(limit);
           console.log(response.data.length);
           console.log(response.data);
           // refresh table rows
           table.rows = response.data;
-          table.totalRecordCount = 2;
+          table.totalRecordCount = 10;
           table.sortable.order = order;
           table.sortable.sort = sort;
         });
@@ -204,7 +211,7 @@ export default defineComponent({
       };
 
       // Get data first
-      doSearch(0, 10, 'id', 'asc');
+      doSearch(0, 2, '_id', 'asc');
   
       return {
         table,
